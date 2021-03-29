@@ -30,12 +30,20 @@
 #include <QQuickView>
 #include <QGuiApplication>
 #include <QQmlEngine>
+#include <QTranslator>
+
+#include <iostream>
 
 int main(int argc, char *argv[])
 {
     qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
 
     QGuiApplication app(argc, argv);
+    QTranslator translator;
+    if (!translator.load(QLocale(), "Basic", "_")) {
+        std::cerr << "Does not load\n";
+    }
+    app.installTranslator(&translator);
     QQuickView view(QString("qrc:/%2").arg(MAIN_QML));
     if (view.status() == QQuickView::Error)
         return -1;

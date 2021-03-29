@@ -68,7 +68,7 @@ Rectangle {
 
                 Label {
                     color: "#565758"
-                    text: "Tap fields to enter text"
+                    text: qsTr("Tap fields to enter text")
                     anchors.horizontalCenter: parent.horizontalCenter
                     font.pixelSize: 22
                 }
