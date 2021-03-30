@@ -1,41 +1,32 @@
 cmake_minimum_required(VERSION 3.18)
 
-project(sample-conan-and-qt VERSION 1.0)
+project(CiphrProject)
 
 enable_language(CXX)
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
+# configure c++ standard
+set(CMAKE_CXX_EXTENSIONS ON)
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
+set(CONAN_USE_CMAKE_GENERATOR OFF CACHE BOOL "Whether use \"cmake\" generator or \"conan_paths\" generator")
+
+if(CONAN_USE_CMAKE_GENERATOR)
+    include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+    conan_basic_setup(TARGETS)
+else()
+    include(${CMAKE_BINARY_DIR}/conan_paths.cmake)
+endif()
+
+# find Qt packages (both "conan_paths" generator and "cmake" generator provide appropriate settings here)
 find_package(Qt5 5.15.0 EXACT REQUIRED COMPONENTS Qml Quick LinguistTools)
 
-set(SOURCE_FILES
-    main.cpp)
+if(NOT CONAN_USE_CMAKE_GENERATOR)
+    find_package(OpenSSL REQUIRED)
+endif()
 
-set(RESOURCE_FILES
-    demo.qrc)
+# Internal libraries
+add_subdirectory(rand-lib)
 
-set(QML_FILES
-    Basic.qml
-    basic-b2qt.qml
-    content/AutoScroller.qml
-    content/HandwritingModeButton.qml
-    content/TextArea.qml
-    content/TextField.qml)
-
-qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} Basic_en.ts Basic_ru.ts)
-
-add_executable(virtualkeyboard
-    ${SOURCE_FILES}
-    ${RESOURCE_FILES}
-    ${QML_FILES}
-    ${QM_FILES})
-
-target_compile_definitions(virtualkeyboard
-    PRIVATE MAIN_QML=\"basic-b2qt.qml\")
-    # PRIVATE MAIN_QML=\"Basic.qml\")
-
-target_link_libraries(virtualkeyboard
-    PRIVATE Qt5::Qml Qt5::Quick)
+# Internal applications
+add_subdirectory(ui-app)

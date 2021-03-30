@@ -1,0 +1,15 @@
+[requires]
+openssl/1.1.1d
+qt/5.15.0@bincrafters/stable
+
+[generators]
+cmake
+cmake_paths
+
+[options]
+qt:qtquickcontrols=True
+qt:qtquickcontrols2=True
+qt:qtdeclarative=True
+qt:qttranslations=True
+qt:qtvirtualkeyboard=True
+# qt:commercial=True

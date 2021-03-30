@@ -27,6 +27,8 @@
 **
 ****************************************************************************/
 
+#include <rand-lib.h>
+
 #include <QQuickView>
 #include <QGuiApplication>
 #include <QQmlEngine>
@@ -50,6 +52,8 @@ int main(int argc, char *argv[])
     view.setResizeMode(QQuickView::SizeRootObjectToView);
 
     view.show();
+
+    std::cout << "RAND number: " << OnyxCorp::generate_random_number() << "\n";
 
     return app.exec();
 }
