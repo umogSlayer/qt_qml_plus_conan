@@ -12,6 +12,6 @@ Then build the project like this:
     conan install --build=missing ..
     cmake -DCONAN_USE_CMAKE_GENERATOR=OFF ..
 
-**OR** as a last step (instead of `cmake ...`) to see a less intrusive conan usage
+**OR** as a last step (instead of `cmake ...`) to see a more intrusive conan usage
 
     cmake -DCONAN_USE_CMAKE_GENERATOR=ON ..
